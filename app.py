@@ -123,7 +123,7 @@ with st.sidebar:
     c = st.select_slider("UCB-Konstante c", options=list(C.C_OPTIONS), key="c_select", format_func=lambda v: f"{v:g}",
                          help="Gewicht des Erkundungsterms. Auf kleinen Rastern entscheidend (Größe 4, 1000 Iterationen: c = 0.25 findet in 10 % der Läufe das Optimum, c = 4 in 100 %), auf Größe 12 fast ohne Wirkung.")
     horizon = st.select_slider("Rollout-Horizont", options=list(C.HORIZON_OPTIONS), key="horizon_select",
-                               help="Maximale Länge eines Zufallslaufs. Zu kurz (10): das Ziel wird kaum erreicht (Größe 12: 40 % der Läufe finden nie eine Route); ab 20 ohne große Wirkung.")
+                               help="Maximale Länge eines Zufallslaufs. Zu kurz (10): das Ziel wird kaum erreicht (Größe 12: 60 % der Läufe finden nie eine Route); ab 20 ohne große Wirkung.")
     st.caption("Heuristik-Wissen einschmuggeln (die zentrale Ablation):")
     rollout = st.radio("Rollout-Politik", options=list(C.ROLLOUTS), format_func=lambda v: C.ROLLOUT_LABELS[v], key="rollout_select",
                        help="Geführt: der nächste Schritt wird per Softmax über -h (Luftlinie zum Ziel) gezogen - das ist Heuristik-Wissen im Rollout.")
@@ -305,6 +305,6 @@ Implementiert in `mcts_algorithm.py` (Suchkerne aus den Geschwistern, `mcts_sear
 st.markdown("---")
 st.caption(
     "Diese Demo ist Teil des Portfolios von [Sebastian Hanisch](https://sebastianhanisch.net) – "
-    "Operations Research und Machine Learning. Interesse an einer maßgeschneiderten Lösung für "
-    "Ihr Unternehmen? [Kontakt aufnehmen](https://sebastianhanisch.net/kontakt.html)"
+    "Operations Research und Machine Learning ([Über mich](https://sebastianhanisch.net/ueber-mich.html)). "
+    "Mehr zur Reihe: [Heuristische Baumsuche: Greedy bis MCTS](https://sebastianhanisch.net/konzepte-heuristische-baumsuche.html)."
 )
