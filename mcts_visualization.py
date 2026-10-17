@@ -2,6 +2,7 @@
 gefundene, robuste und optimale Route), Wiedergabe des Baumwachstums je Iteration mit dem letzten Rollout, Anytime-Kurven, Sweeps, Anteile und
 Ablations-Balken. Achsen sind gesperrt (fixedrange), damit Touch-Geräte beim Scrollen nicht zoomen."""
 
+import math
 import numpy as np
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
@@ -15,6 +16,23 @@ ROLLOUT_COLOR = "#f58518"
 GREY = "rgba(120,120,120,0.55)"
 VARIANT_COLORS = {"pure": "#4c78a8", "reward": "#f58518", "rollout": "#54a24b", "both": "#7b3fbf"}
 INF = float("inf")
+
+
+def _ref_line(fig, value, text, position, axis, log=True, **line_kwargs):
+    """Referenzlinie mit Beschriftung auf einer logarithmischen Achse: die Linie liegt auf dem Datenwert, die Beschriftung braucht log10 des Werts
+    (add_hline und add_vline setzen beide auf denselben Wert, die Beschriftung sitzt dann falsch und dehnt die Achse); log=False für lineare Achsen."""
+    if log and not value > 0.0:
+        return
+    pos = math.log10(value) if log else value
+    top, left = "top" in position, "left" in position
+    if axis == "y":
+        fig.add_hline(y=value, **line_kwargs)
+        if text:
+            fig.add_annotation(xref="paper", yref="y", x=0 if left else 1, y=pos, text=text, showarrow=False, xanchor="left" if left else "right", yanchor="bottom" if top else "top")
+    else:
+        fig.add_vline(x=value, **line_kwargs)
+        if text:
+            fig.add_annotation(xref="x", yref="paper", x=pos, y=1 if top else 0, text=text, showarrow=False, xanchor="right" if left else "left", yanchor="top" if top else "bottom")
 
 
 def lock_axes(fig):
@@ -145,9 +163,9 @@ def build_anytime(curves, optimum, ucs_expansions, astar_expansions, max_visits,
         ys = [c for _it, _v, c in curve] + [curve[-1][2]]
         fig.add_trace(go.Scatter(x=xs, y=ys, mode="lines", line=dict(width=1.8, shape="hv", color=f"hsl({(i * 47) % 360},55%,45%)"), name=f"Seed {i + 1}", showlegend=len(curves) <= 8))
     fig.add_hline(y=optimum, line=dict(color=OPT_COLOR, dash="dash", width=1.5), annotation_text="Optimum", annotation_position="bottom right")
-    fig.add_vline(x=ucs_expansions, line=dict(color="#888", dash="dot", width=1.5), annotation_text=f"UCS: {ucs_expansions:g} Expansionen", annotation_position="top left")
+    _ref_line(fig, ucs_expansions, f"UCS: {ucs_expansions:g} Expansionen", "top left", "x", line=dict(color="#888", dash="dot", width=1.5))
     if astar_expansions is not None:
-        fig.add_vline(x=astar_expansions, line=dict(color="#54a24b", dash="dot", width=1.5), annotation_text=f"A*: {astar_expansions:g}", annotation_position="bottom left")
+        _ref_line(fig, astar_expansions, f"A*: {astar_expansions:g}", "bottom left", "x", line=dict(color="#54a24b", dash="dot", width=1.5))
     fig.update_xaxes(title_text=f"{unit_note} (logarithmisch)", type="log", range=[0, np.log10(max(10.0, max_visits * 1.2))])
     fig.update_yaxes(title_text="Kosten der besten Route")
     return _base(fig, 380, legend_y=-0.3)
