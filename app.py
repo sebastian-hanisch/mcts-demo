@@ -70,6 +70,19 @@ kommt MCTS ans Optimum, und was kostet das gegenüber Uniform-Cost, das ebenfall
 Heuristik-Wissen, das man dem Rollout oder dem Reward heimlich mitgibt? Gemessen, nicht angenommen.
 """
 )
+
+# erklaerseite:einfach:start (erzeugt von tools/set_demo_explainer.py (Website-Repo) aus tools/content/explainers/mcts-erklaert.json, nicht von Hand ändern)
+with st.expander("💬 In einfachen Worten"):
+    st.markdown(
+        """
+Stellen Sie sich eine Kurierin vor, die in einem Stadtviertel mit gesperrten Straßen ohne Stadtplan zum Ziel finden soll. Sie fährt viele Zufallsfahrten mit wild gewählten Abbiegungen und notiert, welche Abzweigungen am Ende ans Ziel führten. Dorthin fährt sie öfter, probiert aber ab und zu auch Abzweigungen, die sie selten genommen hat. So wächst ein Merkzettel, der sich zu den aussichtsreichen Ästen hin verzweigt.
+
+Die Demo misst, wie gut das ohne jede Faustregel funktioniert. Das Verfahren findet Routen, aber meist nicht die kürzesten, und ein großer Teil des Erfolgs stammt aus heimlich mitgegebenem Richtungswissen. In einem vollständig bekannten Netz sind systematische Verfahren klar im Vorteil.
+
+[Ausführlich und verständlich erklärt, mit Fachteil](https://sebastianhanisch.net/mcts-erklaert.html)
+        """
+    )
+# erklaerseite:einfach:end
 st.caption(
     "Setzt auf [greedy-best-first-demo](https://github.com/sebastian-hanisch/greedy-best-first-demo) und [astar-demo](https://github.com/sebastian-hanisch/astar-demo) auf "
     "(derselbe Graph, dieselben Instanzen; Uniform-Cost, A\\* und Greedy Best-First als Vergleich). Nicht gebaut: Weighted A\\*/ARA\\*, Stochastic Beam Search."
@@ -280,6 +293,24 @@ st.markdown(
 st.markdown("---")
 
 with st.expander("📐 Mathematische Formulierung"):
+    # erklaerseite:lesehilfe:start (erzeugt von tools/set_demo_explainer.py (Website-Repo) aus tools/content/explainers/mcts-erklaert.json, nicht von Hand ändern)
+    st.markdown(
+        r"""
+**Lesehilfe.** Gegeben sind ein Raster mit gesperrten Zellen, ein Start und ein Ziel. Gesucht ist eine möglichst kurze Route. Der Baum wächst in Iterationen aus Auswahl (UCB1), Erweiterung, Zufallslauf (Rollout) und Rückmeldung des Rewards $r$.
+
+| Symbol | Bedeutung |
+|---|---|
+| $N(v)$, $W(v)$ | Besuchszahl und Reward-Summe des Baumknotens $v$ |
+| $c$ | UCB-Konstante: Gewicht des Erkundungsterms |
+| $H$ | Rollout-Horizont: höchste Schrittzahl eines Zufallslaufs |
+| $d_0$, $L$ | Luftlinie von Start zu Ziel; Gesamtkosten einer Route |
+| $h(v)$ | Luftlinie von $v$ zum Ziel (die Heuristik) |
+| $\tau$, $\bar w$ | Temperatur des geführten Rollouts; mittlere Kantenlänge |
+
+[Schritt für Schritt erklärt, mit Herleitung und Literatur](https://sebastianhanisch.net/mcts-erklaert.html#fachleute)
+        """
+    )
+    # erklaerseite:lesehilfe:end
     st.markdown(
         r"""
 **Baum.** Ein Knoten $v$ trägt einen Zustand $s(v)$ (auf dem Weg von der Wurzel keine Wiederholung), Besuche $N(v)$ und die Reward-Summe $W(v)$.
