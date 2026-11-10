@@ -313,7 +313,7 @@ with st.expander("📐 Mathematische Formulierung"):
     # erklaerseite:lesehilfe:end
     st.markdown(
         r"""
-**Baum.** Ein Knoten $v$ trägt einen Zustand $s(v)$ (auf dem Weg von der Wurzel keine Wiederholung), Besuche $N(v)$ und die Reward-Summe $W(v)$.
+**Baum.** Ein Knoten $v$ hat einen Zustand $s(v)$ (auf dem Weg von der Wurzel keine Wiederholung), Besuche $N(v)$ und die Reward-Summe $W(v)$.
 
 **Selektion (UCB1, Auer et al. 2002).** Vom Knoten $u$ mit vollständig expandierten Kindern wähle
 $$v^\* = \arg\max_{v \in \text{children}(u)} \; \frac{W(v)}{N(v)} + c \sqrt{\frac{\ln N(u)}{N(v)}}.$$
