@@ -301,7 +301,7 @@ with st.expander("📐 Mathematische Formulierung"):
 | Symbol | Bedeutung |
 |---|---|
 | $N(v)$, $W(v)$ | Besuchszahl und Reward-Summe des Baumknotens $v$ |
-| $c$ | UCB-Konstante: Gewicht des Erkundungsterms |
+| $c$ | UCB-Konstante: Gewicht des Explorationsterms |
 | $H$ | Rollout-Horizont: höchste Schrittzahl eines Zufallslaufs |
 | $d_0$, $L$ | Luftlinie von Start zu Ziel; Gesamtkosten einer Route |
 | $h(v)$ | Luftlinie von $v$ zum Ziel (die Heuristik) |
