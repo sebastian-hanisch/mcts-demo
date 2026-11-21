@@ -134,7 +134,7 @@ with st.sidebar:
     iterations = st.select_slider("Iterationen", options=list(C.ITERATIONS), key="iterations_select", format_func=lambda v: f"{v:,}".replace(",", "."),
                                   help="Zahl der Selektion-Expansion-Simulation-Rückpropagation-Durchläufe. Größenordnung des Aufwands: rund 25 Knotenbesuche je Iteration.")
     c = st.select_slider("UCB-Konstante c", options=list(C.C_OPTIONS), key="c_select", format_func=lambda v: f"{v:g}",
-                         help="Gewicht des Erkundungsterms. Auf kleinen Rastern entscheidend (Größe 4, 1000 Iterationen: c = 0.25 findet in 10 % der Läufe das Optimum, c = 4 in 100 %), auf Größe 12 fast ohne Wirkung.")
+                         help="Gewicht des Explorationsterms. Auf kleinen Rastern entscheidend (Größe 4, 1000 Iterationen: c = 0.25 findet in 10 % der Läufe das Optimum, c = 4 in 100 %), auf Größe 12 fast ohne Wirkung.")
     horizon = st.select_slider("Rollout-Horizont", options=list(C.HORIZON_OPTIONS), key="horizon_select",
                                help="Maximale Länge eines Zufallslaufs. Zu kurz (10): das Ziel wird kaum erreicht (Größe 12: 60 % der Läufe finden nie eine Route); ab 20 ohne große Wirkung.")
     st.caption("Heuristik-Wissen einschmuggeln (die zentrale Ablation):")

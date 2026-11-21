@@ -1,8 +1,8 @@
 """Suchkerne - `_search`, `greedy_best_first`, `uniform_cost_search`, `a_star` wortgleich aus `astar-demo`/`beam-search-demo` (dort korrektheitsgeprüft;
 Vergleichsgrößen dieses Stücks: UCS = das Optimum OHNE Heuristik, A* und GBFS = mit) und NEU `mcts_search` (Monte Carlo Tree Search, UCT).
 
-MCTS ersetzt die handgemachte Heuristik h(n) durch zufällige Rollouts: Werte werden aus Simulationen geschätzt, UCB1 balanciert Erkundung und
-Ausbeutung, der Baum wächst asymmetrisch zu Ästen mit gutem Reward. Der Reward gibt es nur am Ziel (spärlich); wie weit das auf einem
+MCTS ersetzt die handgemachte Heuristik h(n) durch zufällige Rollouts: Werte werden aus Simulationen geschätzt, UCB1 balanciert Exploration und
+Exploitation, der Baum wächst asymmetrisch zu Ästen mit gutem Reward. Der Reward gibt es nur am Ziel (spärlich); wie weit das auf einem
 deterministischen Pfadproblem reicht und wie viel davon eingeschmuggeltes Heuristik-Wissen ist (Reward "progress", Rollout "guided"), wird gemessen."""
 
 import heapq

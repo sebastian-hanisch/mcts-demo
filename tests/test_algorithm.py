@@ -99,7 +99,7 @@ def test_ucb1_matches_the_hand_computation():
     assert A.ucb1(3.0, 4, 10, 1.0) == pytest.approx(0.75 + math.sqrt(math.log(10) / 4))
     assert A.ucb1(3.0, 4, 10, 0.0) == pytest.approx(0.75)
     assert A.ucb1(0.0, 1, 1, 5.0) == 0.0                                   # ln 1 = 0
-    assert A.ucb1(2.0, 2, 8, 2.0) > A.ucb1(2.0, 4, 8, 2.0)                 # weniger besucht -> mehr Erkundungsbonus
+    assert A.ucb1(2.0, 2, 8, 2.0) > A.ucb1(2.0, 4, 8, 2.0)                 # weniger besucht -> mehr Explorationsbonus
 
 
 def _two_branch_graph():
