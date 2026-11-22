@@ -61,8 +61,8 @@ st.markdown(
     """
 **Achtes und letztes Stück der Heuristische-Baumsuche-Linie.** Alle sieben Stücke davor teilen eine Annahme: es gibt eine handgemachte Heuristik
 h(n), hier die Luftlinie zum Ziel. **Monte Carlo Tree Search** (MCTS) ersetzt sie durch **zufällige Rollouts**: den Wert eines Knotens schätzt es, indem
-es von dort einen Zufallslauf bis zum Ziel simuliert; **UCB1** entscheidet, ob es einen bekannten guten Ast vertieft oder einen seltener besuchten
-erkundet, und der Baum wächst dorthin, wo die Simulationen Gutes versprechen. In Spielen (Go, Schach) ist das der Standard, wo keine brauchbare
+es von dort einen Zufallslauf bis zum Ziel simuliert; **UCB1** entscheidet, ob es einen bekannten guten Ast vertieft (Exploitation) oder einen seltener besuchten
+erkundet (Exploration), und der Baum wächst dorthin, wo die Simulationen Gutes versprechen. In Spielen (Go, Schach) ist das der Standard, wo keine brauchbare
 Heuristik existiert.
 
 Auf einem **deterministischen Pfadproblem mit Reward nur am Ziel** ist die Frage offen: reichen Zufallsläufe, um das Ziel überhaupt zu finden? Wie nah
@@ -91,7 +91,7 @@ st.caption(
 with st.expander("So funktioniert MCTS (UCT)", expanded=True):
     st.markdown(
         """
-1. **Selektion:** von der Wurzel absteigen; unter den Kindern zählt **UCB1 = mittlerer Reward + c · √(ln N<sub>Eltern</sub> / N<sub>Kind</sub>)** - hoher Reward lockt zum Vertiefen, wenig besucht lockt zum Erkunden.
+1. **Selektion:** von der Wurzel absteigen; unter den Kindern zählt **UCB1 = mittlerer Reward + c · √(ln N<sub>Eltern</sub> / N<sub>Kind</sub>)** - hoher Reward lockt zur Exploitation, wenig besucht lockt zur Exploration.
 2. **Expansion:** ein noch nicht probiertes Kind wird an den Baum gehängt. Der Baum lebt über **Pfade**; ein Zustand wiederholt sich nie auf einem Weg.
 3. **Simulation (Rollout):** von dort ein selbstvermeidender Zufallslauf, bis das Ziel erreicht ist, eine Sackgasse kommt oder der **Horizont** endet. Reward: Ziel erreicht mit Kosten L → **d0 / L** (d0 = Luftlinie Start-Ziel, also höchstens 1), sonst 0.
 4. **Rückpropagation:** der Reward geht in alle Vorfahren. Ergebnis ist die **beste je gefundene Route** (jede Simulation, die das Ziel erreicht, liefert einen gültigen Pfad).
@@ -192,7 +192,7 @@ st.markdown("---")
 
 st.markdown("## 🎯 Ergebnis gegen Uniform-Cost, A\\* und Greedy")
 st.caption(
-    "**Lücke:** Kosten der besten gefundenen Route gegenüber dem Optimum (Uniform-Cost). **Knotenbesuche** (MCTS) und **Expansionen** (Uniform-Cost, A\\*) sind "
+    "**Lücke** (Optimalitätslücke, Optimality Gap): Kosten der besten gefundenen Route gegenüber dem Optimum (Uniform-Cost). **Knotenbesuche** (MCTS) und **Expansionen** (Uniform-Cost, A\\*) sind "
     "verschiedene Einheiten - nur der Größenordnung nach vergleichbar. **Ziel-Rollouts:** Anteil der Iterationen, die das Ziel erreichen (spärlicher Reward)."
 )
 m1, m2, m3, m4 = st.columns(4)
